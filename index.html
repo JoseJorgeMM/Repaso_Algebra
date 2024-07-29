@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recordatorio: factorización y operaciones algebraicas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .content {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            }
+            to {
+                box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000;
+            }
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 0.5em;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 1em;
+            color: #4CAF50;
+        }
+        #polynomial {
+            font-size: 2em;
+            margin: 1em 0;
+        }
+        #steps {
+            font-size: 1.2em;
+            text-align: left;
+            width: 80%;
+            max-width: 600px;
+        }
+        #steps p:last-child {
+            color: #00ffff;
+            font-weight: bold;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin-top: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="content">
+        <h1>Recordatorio: factorización y operaciones algebraicas</h1>
+        <h2>Profesor: Jose Jorge Muñoz</h2>
+        <h3 id="operationType"></h3>
+        <div id="polynomial"></div>
+        <div id="steps"></div>
+        <button onclick="generateExercise()">Nuevo ejercicio</button>
+    </div>
+
+    <script>
+        function generateStars() {
+            const stars = document.querySelector('.stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.style.position = 'absolute';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.backgroundColor = 'white';
+                star.style.borderRadius = '50%';
+                star.style.opacity = Math.random();
+                stars.appendChild(star);
+            }
+        }
+
+        function generateExercise() {
+            const types = ['factorComun', 'agrupacion', 'diferenciaDeCuadrados', 'trinomioCuadradoPerfecto', 'trinomioFormaGeneral', 'sumaCubos', 'diferenciaCubos', 'suma', 'resta', 'multiplicacion', 'division'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            let polynomial, steps, operationType;
+
+            switch (type) {
+                case 'factorComun':
+                    [polynomial, steps] = generateFactorComun();
+                    operationType = "Factor Común";
+                    break;
+                case 'agrupacion':
+                    [polynomial, steps] = generateAgrupacion();
+                    operationType = "Agrupación de Términos";
+                    break;
+                case 'diferenciaDeCuadrados':
+                    [polynomial, steps] = generateDiferenciaDeCuadrados();
+                    operationType = "Diferencia de Cuadrados Perfectos";
+                    break;
+                case 'trinomioCuadradoPerfecto':
+                    [polynomial, steps] = generateTrinomioCuadradoPerfecto();
+                    operationType = "Trinomio Cuadrado Perfecto";
+                    break;
+                case 'trinomioFormaGeneral':
+                    [polynomial, steps] = generateTrinomioFormaGeneral();
+                    operationType = "Trinomio de la forma ax²ⁿ + bxⁿ + c";
+                    break;
+                case 'sumaCubos':
+                    [polynomial, steps] = generateSumaCubos();
+                    operationType = "Suma de Cubos Perfectos";
+                    break;
+                case 'diferenciaCubos':
+                    [polynomial, steps] = generateDiferenciaCubos();
+                    operationType = "Diferencia de Cubos Perfectos";
+                    break;
+                case 'suma':
+                    [polynomial, steps] = generateSuma();
+                    operationType = "Suma de Expresiones Algebraicas";
+                    break;
+                case 'resta':
+                    [polynomial, steps] = generateResta();
+                    operationType = "Resta de Expresiones Algebraicas";
+                    break;
+                case 'multiplicacion':
+                    [polynomial, steps] = generateMultiplicacion();
+                    operationType = "Multiplicación de Expresiones Algebraicas";
+                    break;
+                case 'division':
+                    [polynomial, steps] = generateDivision();
+                    operationType = "División de Expresiones Algebraicas";
+                    break;
+            }
+
+            document.getElementById('operationType').textContent = operationType;
+            document.getElementById('polynomial').textContent = polynomial;
+            animateSteps(steps);
+        }
+
+        // ... (mantén las funciones anteriores de factorización aquí) ...
+
+        function generateSuma() {
+            const a = Math.floor(Math.random() * 10) - 5;
+            const b = Math.floor(Math.random() * 10) - 5;
+            const c = Math.floor(Math.random() * 10) - 5;
+            const d = Math.floor(Math.random() * 10) - 5;
+            const polynomial = `(${a}x + ${b}) + (${c}x + ${d})`;
+            const steps = [
+                `Agrupamos términos semejantes:`,
+                `(${a}x + ${c}x) + (${b} + ${d})`,
+                `Resultado final: ${a+c}x + ${b+d}`
+            ];
+            return [polynomial, steps];
+        }
+
+        function generateResta() {
+            const a = Math.floor(Math.random() * 10) - 5;
+            const b = Math.floor(Math.random() * 10) - 5;
+            const c = Math.floor(Math.random() * 10) - 5;
+            const d = Math.floor(Math.random() * 10) - 5;
+            const polynomial = `(${a}x + ${b}) - (${c}x + ${d})`;
+            const steps = [
+                `Cambiamos el signo del sustraendo:`,
+                `(${a}x + ${b}) + (${-c}x + ${-d})`,
+                `Agrupamos términos semejantes:`,
+                `(${a}x + ${-c}x) + (${b} + ${-d})`,
+                `Resultado final: ${a-c}x + ${b-d}`
+            ];
+            return [polynomial, steps];
+        }
+
+        function generateMultiplicacion() {
+            const a = Math.floor(Math.random() * 5) + 1;
+            const b = Math.floor(Math.random() * 5) + 1;
+            const polynomial = `(${a}x + ${b})(${a}x - ${b})`;
+            const steps = [
+                `Aplicamos FOIL (First, Outer, Inner, Last):`,
+                `${a}x · ${a}x = ${a*a}x²`,
+                `${a}x · (-${b}) = -${a*b}x`,
+                `${b} · ${a}x = ${a*b}x`,
+                `${b} · (-${b}) = -${b*b}`,
+                `Agrupamos términos:`,
+                `${a*a}x² + (-${a*b}x + ${a*b}x) + (-${b*b})`,
+                `Resultado final: ${a*a}x² - ${b*b}`
+            ];
+            return [polynomial, steps];
+        }
+
+        function generateDivision() {
+            const a = Math.floor(Math.random() * 5) + 1;
+            const b = Math.floor(Math.random() * 5) + 1;
+            const c = Math.floor(Math.random() * 5) + 1;
+            const polynomial = `(${a}x² + ${b}x + ${c}) ÷ (x + 1)`;
+            const steps = [
+                `Dividimos término a término:`,
+                `${a}x² ÷ x = ${a}x`,
+                `${b}x ÷ x = ${b}`,
+                `${c} ÷ x no se puede simplificar más`,
+                `Resultado final: ${a}x + ${b} + ${c}/(x+1)`
+            ];
+            return [polynomial, steps];
+        }
+
+        function animateSteps(steps) {
+            const stepsDiv = document.getElementById('steps');
+            stepsDiv.innerHTML = '';
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    const stepElement = document.createElement('p');
+                    stepElement.textContent = step;
+                    stepElement.style.opacity = 0;
+                    stepsDiv.appendChild(stepElement);
+                    setTimeout(() => {
+                        stepElement.style.transition = 'opacity 1s';
+                        stepElement.style.opacity = 1;
+                    }, 50);
+                }, index * 1000);
+            });
+        }
+
+        generateStars();
+        generateExercise();
+    </script>
+</body>
+</html>
